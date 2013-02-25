@@ -60,6 +60,18 @@
         }
       });
     });
+    it("should handle keygroups with . separators", function() {
+      return expect(TOML.parse('[a.b]\nc = "C"\n[a.d]\ne = "E"')).toEqual({
+        a: {
+          b: {
+            c: "C"
+          },
+          d: {
+            e: "E"
+          }
+        }
+      });
+    });
     it("should handle integers", function() {
       return expect(TOML.parse('a = 1')).toEqual({
         a: 1

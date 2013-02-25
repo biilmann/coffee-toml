@@ -24,6 +24,9 @@ describe "TOML", ->
     result = TOML.parse('[first]\na = "A"\nb = "B"\n  [second]\n  c = "C"\n  d = "D"')
     expect(result).toEqual({first: {a: "A", b: "B", second: {c: "C", d: "D"}}})
   
+  it "should handle keygroups with . separators", ->
+    expect(TOML.parse('[a.b]\nc = "C"\n[a.d]\ne = "E"')).toEqual({a: {b: {c: "C"}, d: {e: "E"}}})
+  
   it "should handle integers", ->
     expect(TOML.parse('a = 1')).toEqual({a: 1})
 

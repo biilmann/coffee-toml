@@ -98,14 +98,20 @@
     }
 
     KeyGroupParser.prototype.parse = function() {
-      var groupChunk, match, nestedParser, nextGroupIndex;
+      var groupChunk, key, keys, match, nestedParser, nextGroupIndex, result;
       if (match = this.chunk.match(TOKENS.keyGroup)) {
         this.discard(match);
         this.skipNewline();
-        this.result[match[2]] = {};
+        keys = match[2].split('.');
+        result = this.result;
+        while (keys.length) {
+          key = keys.shift();
+          result[key] || (result[key] = {});
+          result = result[key];
+        }
         nextGroupIndex = this.chunk.indexOf("\n" + (match[1] || '') + "[");
         groupChunk = nextGroupIndex === -1 ? this.chunk : this.chunk.substr(0, nextGroupIndex);
-        nestedParser = new Parser(groupChunk, this.result[match[2]]);
+        nestedParser = new Parser(groupChunk, result);
         while (nestedParser.chunk) {
           nestedParser = nestedParser.parse();
         }

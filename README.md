@@ -1,13 +1,13 @@
 ## TOML Coffee
 
-A small TOML parser written in CoffeeScript. Comes with a Jasmine test-suite that might be of help to other implementers.
+A small TOML parser written in CoffeeScript.
 
-Groups with dots [alpha.beta] still not supported.
+Works both in browsers and as a CommonJS module.
 
 ### Usage:
 
     config = TOML.parse(yourTOMLString)
 
-### Tests:
+### Jasmine Specs:
 
 Just download the repo and open **specRunner.html**

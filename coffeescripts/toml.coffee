@@ -10,6 +10,7 @@ TOKENS =
   arrayTerminator: /^[\s\n]*\]/
   comment: /^\s*#[^\n]*/
 
+
 ESCAPE_CHARS =
   "0": "\0"
   "t": "\t"
@@ -17,6 +18,7 @@ ESCAPE_CHARS =
   "r": "\r"
   "\"": "\""
   "\\": "\\"
+
 
 class Parser
   constructor: (@chunk, @result = {}, @currentKey = null) ->
@@ -63,10 +65,17 @@ class KeyGroupParser extends Parser
     if match = @chunk.match(TOKENS.keyGroup)
       @discard(match)
       @skipNewline()
-      @result[match[2]] = {}
+      
+      keys = match[2].split('.')
+      result = @result
+      while keys.length
+        key = keys.shift()
+        result[key] ||= {}
+        result = result[key]
+
       nextGroupIndex = @chunk.indexOf("\n#{match[1] || ''}[")
       groupChunk = if nextGroupIndex == -1 then @chunk else @chunk.substr(0, nextGroupIndex)
-      nestedParser = new Parser(groupChunk, @result[match[2]])
+      nestedParser = new Parser(groupChunk, result)
 
       while nestedParser.chunk
         nestedParser = nestedParser.parse()
