@@ -124,7 +124,6 @@ class ArrayParser extends Parser
     @skipNonTokens()
 
     while @chunk
-      console.log("Parsing array chunk %s", @chunk)
       parser = new ValueParser(@chunk, {}, 'value')
       parser = parser.parse()
 
