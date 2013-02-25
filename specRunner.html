@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="shortcut icon" type="image/png" href="javascripts/lib/jasmine-1.2.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="javascripts/lib/jasmine-1.2.0/jasmine.css">
+  <script type="text/javascript" src="javascripts/lib/jasmine-1.2.0/jasmine.js"></script>
+  <script type="text/javascript" src="javascripts/lib/jasmine-1.2.0/jasmine-html.js"></script>
+
+  <script type="text/javascript" src="javascripts/toml.js"></script>
+  <script type="text/javascript" src="javascripts/toml-spec.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+
+  <script type="text/toml" id="toml-example">
+# This is a TOML document. Boom.
+
+title = "TOML Example"
+
+[owner]
+name = "Tom Preston-Werner"
+organization = "GitHub"
+bio = "GitHub Cofounder & CEO\nLikes tater tots and beer."
+dob = 1979-05-27T07:32:00Z # First class dates? Why not?
+
+[database]
+server = "192.168.1.1"
+ports = [ 8001, 8001, 8002 ]
+connection_max = 5000
+enabled = true
+
+[servers]
+
+  # You can indent as you please. Tabs or spaces. TOML don't care.
+  [servers.alpha]
+  ip = "10.0.0.1"
+  dc = "eqdc10"
+
+  [servers.beta]
+  ip = "10.0.0.2"
+  dc = "eqdc10"
+
+[clients]
+data = [ ["gamma", "delta"], [1, 2] ] # just an update to make sure parsers support it
+
+# Line breaks are OK when inside arrays
+hosts = [
+  "alpha",
+  "omega"
+]
+</script>
+  
+</head>
+
+<body>
+</body>
+</html>
